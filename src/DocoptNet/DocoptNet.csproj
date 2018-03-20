@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2B454F8B-D702-4281-80DF-367142007B0C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{195E3B5E-C668-4DE6-A956-58119ACB7655}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NavalFate</RootNamespace>
-    <AssemblyName>NavalFate</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>DocoptNet</RootNamespace>
+    <AssemblyName>DocoptNet</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,13 +23,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>DocoptNet.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -38,20 +43,37 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Argument.cs" />
+    <Compile Include="BranchPattern.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="Docopt.cs" />
+    <Compile Include="DocoptBaseException.cs" />
+    <Compile Include="DocoptExitException.cs" />
+    <Compile Include="DocoptInputErrorException.cs" />
+    <Compile Include="DocoptLanguageErrorException.cs" />
+    <Compile Include="Either.cs" />
+    <Compile Include="GenerateCodeHelper.cs" />
+    <Compile Include="LeafPattern.cs" />
+    <Compile Include="MatchResult.cs" />
+    <Compile Include="Node.cs" />
+    <Compile Include="OneOrMore.cs" />
+    <Compile Include="Option.cs" />
+    <Compile Include="Optional.cs" />
+    <Compile Include="OptionsShortcut.cs" />
+    <Compile Include="Pattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Required.cs" />
+    <Compile Include="StringPartition.cs" />
+    <Compile Include="Tokens.cs" />
+    <Compile Include="ValueObject.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\DocoptNet\DocoptNet.csproj">
-      <Project>{195e3b5e-c668-4de6-a956-58119acb7655}</Project>
-      <Name>DocoptNet</Name>
-    </ProjectReference>
+    <None Include="DocoptNet.publickey" />
+    <None Include="DocoptNet.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
