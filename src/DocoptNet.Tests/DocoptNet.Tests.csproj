@@ -70,7 +70,7 @@
     <Compile Include="ArgumentMatchTests.cs" />
     <Compile Include="Assumptions.cs" />
     <Compile Include="BasicPatternMatchingTests.cs" />
-    <Compile Include="BindTests.cs" />
+    <Compile Include="BinderTests.cs" />
     <Compile Include="CommandMatchTests.cs" />
     <Compile Include="CommandsTests.cs" />
     <Compile Include="CountMultipleFlagsTests.cs" />
