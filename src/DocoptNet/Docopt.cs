@@ -11,6 +11,7 @@ namespace DocoptNet
     {
         public event EventHandler<PrintExitEventArgs> PrintExit;
 
+        #region Apply
         public IDictionary<string, ValueObject> Apply(string doc)
         {
             return Apply(doc, new Tokens("", typeof (DocoptInputErrorException)));
@@ -27,6 +28,29 @@ namespace DocoptNet
         {
             return Apply(doc, new Tokens(argv, typeof (DocoptInputErrorException)), help, version, optionsFirst, exit);
         }
+        #endregion
+
+        #region Bind
+        public T Bind<T>(string doc) where T : new()
+        {
+            var args = Apply(doc);
+            return new Binder<T>().Bind(args);
+        }
+
+        public T Bind<T>(string doc, string cmdLine, bool help = true,
+            object version = null, bool optionsFirst = false, bool exit = false) where T : new()
+        {
+            var args = Apply(doc, cmdLine, help, version, optionsFirst, exit);
+            return new Binder<T>().Bind(args);
+        }
+
+        public T Bind<T>(string doc, ICollection<string> argv, bool help = true,
+            object version = null, bool optionsFirst = false, bool exit = false) where T : new()
+        {
+            var args = Apply(doc, argv, help, version, optionsFirst, exit);
+            return new Binder<T>().Bind(args);
+        }
+        #endregion
 
         protected IDictionary<string, ValueObject> Apply(string doc, Tokens tokens,
             bool help = true,

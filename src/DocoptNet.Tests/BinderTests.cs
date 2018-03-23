@@ -40,10 +40,10 @@ namespace DocoptNet.Tests
     }
 
     [TestFixture]
-    public class BindTests
+    public class BinderTests
     {
         [Test]
-        public void Bind_ValuePropery()
+        public void Binder_ValuePropery()
         {
             var args = new Dictionary<string, ValueObject>()
             {
@@ -56,8 +56,8 @@ namespace DocoptNet.Tests
                 { "StringValue", new ValueObject("string value")},
             };
 
-            var opts = new SimpleOptions();
-            args.Bind(opts);
+            var binder = new Binder<SimpleOptions>();
+            var opts = binder.Bind(args);
 
             Assert.AreEqual(true, opts.BoolValue);
             Assert.AreEqual(123, opts.IntegerValue);
@@ -68,10 +68,9 @@ namespace DocoptNet.Tests
             Assert.AreEqual("string value", opts.StringValue);
 
         }
-
-
+        
         [Test]
-        public void Bind_DataContract()
+        public void Binder_DataContract()
         {
             var args = new Dictionary<string, ValueObject>()
             {
@@ -81,8 +80,8 @@ namespace DocoptNet.Tests
                 { "NonDataMember", new ValueObject("NonDataMember")},
             };
 
-            var opts = new DataContractOptions();
-            args.Bind(opts);
+            var binder = new Binder<DataContractOptions>();
+            var opts = binder.Bind(args);
 
             Assert.AreEqual("Member", opts.Member);
             Assert.AreEqual("Named", opts.NamedMember);
@@ -91,7 +90,7 @@ namespace DocoptNet.Tests
         }
 
         [Test]
-        public void Bind_ArrayProperty()
+        public void Binder_ArrayProperty()
         {
             var args = new Dictionary<string, ValueObject>();
 
@@ -106,9 +105,9 @@ namespace DocoptNet.Tests
             args["Integers"] = integers;
             args["Strings"] = strings;
 
-            var opts = new ArrayOptions();
-            args.Bind(opts);
-
+            var binder = new Binder<ArrayOptions>();
+            var opts = binder.Bind(args);
+            
             CollectionAssert.AreEqual(new int[] { 1, 2, 3 }, opts.Integers);
             CollectionAssert.AreEqual(new string[] { "S1", "S2", "S3" }, opts.Strings);
         }
