@@ -7,6 +7,22 @@ using System.Reflection;
 
 namespace DocoptNet
 {
+    public class DocoptAliasAttribute
+        : Attribute
+    {
+        public DocoptAliasAttribute(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("empty string is not allowed.");
+            }
+
+            this.Name = name;
+        }
+
+        public string Name { get; private set; }
+    }
+
     internal class Binder<T> where T: new()
     {
         // Bind populates the public properties of a given class T with matching option values.
@@ -18,6 +34,9 @@ namespace DocoptNet
         //   public int Abc {get; set;}  // mapped from "--abc", "<abc>", or "abc"
         //                               // (case insensitive)
         //   public int A {get; set;}    // mapped from "-a", "<a>", or "a"
+        //                               // (case insensitive)
+        //   [DocoptMember(Name="Alias")]
+        //   public int A {get; set;}    // mapped from "--alias", "<alias>", or "alias"
         //                               // (case insensitive)
         //
         // If a given class has DataContract attribute, DataMember attribute is used 
@@ -65,21 +84,26 @@ namespace DocoptNet
 
                 ValueObject value = null;
 
+                if (Attribute.IsDefined(prop, typeof(DocoptAliasAttribute)))
+                {
+                    var attr = prop.GetCustomAttributes(typeof(DocoptAliasAttribute), true)
+                    .Cast<DocoptAliasAttribute>().First();
+
+                    options.TryGetValue(attr.Name.ToLower(), out value);
+                }
+
                 if (Attribute.IsDefined(prop, typeof(DataMemberAttribute)))
                 {
                     var attr = prop.GetCustomAttributes(typeof(DataMemberAttribute), true)
                         .Cast<DataMemberAttribute>().First();
 
-                    if (string.IsNullOrEmpty(attr.Name))
-                    {
-                        options.TryGetValue(prop.Name.ToLower(), out value);
-                    }
-                    else
+                    if (!string.IsNullOrEmpty(attr.Name))
                     {
                         options.TryGetValue(attr.Name.ToLower(), out value);
                     }
                 }
-                else
+
+                if (value == null)
                 {
                     options.TryGetValue(prop.Name.ToLower(), out value);
                 }

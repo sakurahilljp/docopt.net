@@ -39,6 +39,15 @@ namespace DocoptNet.Tests
         public string NonDataMember { get; set; }
     }
 
+
+    class DocoptAliasOptions
+    {
+        public string Member { get; set; }
+
+        [DocoptAlias("Named")]
+        public string NamedMember { get; set; }
+    }
+
     [TestFixture]
     public class BinderTests
     {
@@ -87,6 +96,22 @@ namespace DocoptNet.Tests
             Assert.AreEqual("Named", opts.NamedMember);
             Assert.AreEqual(null, opts.NonDataMember);
 
+        }
+
+        [Test]
+        public void Binder_DocoptAlias()
+        {
+            var args = new Dictionary<string, ValueObject>()
+            {
+                { "Member", new ValueObject("Member")},
+                { "Named", new ValueObject("Named")},
+            };
+
+            var binder = new Binder<DocoptAliasOptions>();
+            var opts = binder.Bind(args);
+
+            Assert.AreEqual("Member", opts.Member);
+            Assert.AreEqual("Named", opts.NamedMember);
         }
 
         [Test]
