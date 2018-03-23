@@ -7,6 +7,7 @@ using System.Reflection;
 
 namespace DocoptNet
 {
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = false)]
     public class DocoptAliasAttribute
         : Attribute
     {
@@ -86,10 +87,12 @@ namespace DocoptNet
 
                 if (Attribute.IsDefined(prop, typeof(DocoptAliasAttribute)))
                 {
-                    var attr = prop.GetCustomAttributes(typeof(DocoptAliasAttribute), true)
-                    .Cast<DocoptAliasAttribute>().First();
-
-                    options.TryGetValue(attr.Name.ToLower(), out value);
+                    var attrs = prop.GetCustomAttributes(typeof(DocoptAliasAttribute), true)
+                        .Cast<DocoptAliasAttribute>();
+                    foreach (var attr in attrs)
+                    {
+                        options.TryGetValue(attr.Name.ToLower(), out value);
+                    }
                 }
 
                 if (Attribute.IsDefined(prop, typeof(DataMemberAttribute)))
