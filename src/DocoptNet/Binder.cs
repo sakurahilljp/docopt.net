@@ -40,22 +40,7 @@ namespace DocoptNet
         //   public int A {get; set;}    // mapped from "--alias", "<alias>", or "alias"
         //                               // (case insensitive)
         //
-        // If a given class has DataContract attribute, DataMember attribute is used 
-        // to specify mapped property. Name of DataMember attribute is used to map.
-        //
-        // [DataContract]
-        // class A {
-        //     public int Ingnore {get; set;} // ignored
-        //     
-        //     [DataMember]
-        //     public int Abc {get; set;}     // mapped from "--abc", "<abc>" or "abc"
-        //                                    // (case insensitive)
-        //
-        //     [DataMember(Name="Abc")]
-        //     public int PropABC {get; set;} // mapped from "--abc", "<abc>" or "abc"
-        //                                    // (case insensitive)
-        // }
-        // Bind also handles conversion to bool, float, int or string types.
+        // Bind also handles conversion to bool, float, double, decimal, int, long or string types.
 
 
         public Binder()
@@ -68,16 +53,7 @@ namespace DocoptNet
             var t = container.GetType();
 
             // Listing only public properties.
-            var properties = new PropertyInfo[0];
-            if (Attribute.IsDefined(t, typeof(DataContractAttribute), true))
-            {
-                properties = t.GetProperties()
-                    .Where(p => Attribute.IsDefined(p, typeof(DataMemberAttribute))).ToArray();
-            }
-            else
-            {
-                properties = t.GetProperties();
-            }
+            var properties = t.GetProperties();
 
             foreach (var prop in properties)
             {
@@ -90,17 +66,6 @@ namespace DocoptNet
                     var attrs = prop.GetCustomAttributes(typeof(DocoptAliasAttribute), true)
                         .Cast<DocoptAliasAttribute>();
                     foreach (var attr in attrs)
-                    {
-                        options.TryGetValue(attr.Name.ToLower(), out value);
-                    }
-                }
-
-                if (Attribute.IsDefined(prop, typeof(DataMemberAttribute)))
-                {
-                    var attr = prop.GetCustomAttributes(typeof(DataMemberAttribute), true)
-                        .Cast<DataMemberAttribute>().First();
-
-                    if (!string.IsNullOrEmpty(attr.Name))
                     {
                         options.TryGetValue(attr.Name.ToLower(), out value);
                     }

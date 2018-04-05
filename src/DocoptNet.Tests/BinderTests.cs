@@ -26,20 +26,7 @@ namespace DocoptNet.Tests
         
         public string[] Strings { get; set; }
     }
-
-    [DataContract]
-    class DataContractOptions
-    {
-        [DataMember]
-        public string Member { get; set; }
-
-        [DataMember(Name ="Named")]
-        public string NamedMember { get; set; }
-
-        public string NonDataMember { get; set; }
-    }
-
-
+    
     class DocoptAliasOptions
     {
         public string Member { get; set; }
@@ -77,27 +64,7 @@ namespace DocoptNet.Tests
             Assert.AreEqual("string value", opts.StringValue);
 
         }
-        
-        [Test]
-        public void Binder_DataContract()
-        {
-            var args = new Dictionary<string, ValueObject>()
-            {
-                { "Member", new ValueObject("Member")},
-                { "Named", new ValueObject("Named")},
-                { "NamedMember", new ValueObject("NamedMember")},
-                { "NonDataMember", new ValueObject("NonDataMember")},
-            };
-
-            var binder = new Binder<DataContractOptions>();
-            var opts = binder.Bind(args);
-
-            Assert.AreEqual("Member", opts.Member);
-            Assert.AreEqual("Named", opts.NamedMember);
-            Assert.AreEqual(null, opts.NonDataMember);
-
-        }
-
+      
         [Test]
         public void Binder_DocoptAlias()
         {
