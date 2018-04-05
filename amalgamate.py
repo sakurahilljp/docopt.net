@@ -25,7 +25,7 @@ def main():
                     codes.append(line)  
 
     with open(OUTPUT, 'w') as fp:
-        for s in usings:
+        for s in sorted(usings):
             print(s, end='', file=fp)
         print('', file=fp)
         print('namespace DocoptNet', file=fp)
