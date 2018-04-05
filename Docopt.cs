@@ -1,12 +1,12 @@
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Collections;
-using System.Runtime.Serialization;
 using System.Diagnostics;
-using System;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
 
 namespace DocoptNet
 {
