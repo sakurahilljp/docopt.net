@@ -27,14 +27,18 @@ def main():
 
     with open(OUTPUT, 'w') as fp:
         # License
-        print('/*', file=fp)
-        print('', file=fp)
-        with open(LICENSE, 'r') as fp2:
-            for s in fp2:
-                print(s, end='', file=fp)
-        print('', file=fp)
-        print('*/', file=fp)
-        print('', file=fp)
+        print('''/*
+
+Docopt.NET (https://github.com/docopt/docopt.net)
+
+Copyright (c) 2012 Vladimir Keleshev, <vladimir@keleshev.com>
+                   Dinh Doan Van Bien, <dinh@doanvanbien.com>
+
+Licensed under MIT (https://github.com/docopt/docopt.net/blob/master/LICENSE-MIT)
+
+*/
+
+''', file=fp)
         
         # using directive
         for s in sorted(usings):
