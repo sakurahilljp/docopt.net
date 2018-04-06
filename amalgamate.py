@@ -2,6 +2,7 @@
 
 import glob
 
+LICENSE='./LICENSE-MIT'
 PATTERN='./src/DocoptNet/*.cs'
 OUTPUT='Docopt.cs'
 
@@ -25,9 +26,22 @@ def main():
                     codes.append(line)  
 
     with open(OUTPUT, 'w') as fp:
+        # License
+        print('/*', file=fp)
+        print('', file=fp)
+        with open(LICENSE, 'r') as fp2:
+            for s in fp2:
+                print(s, end='', file=fp)
+        print('', file=fp)
+        print('*/', file=fp)
+        print('', file=fp)
+        
+        # using directive
         for s in sorted(usings):
             print(s, end='', file=fp)
         print('', file=fp)
+
+        # implementations
         print('namespace DocoptNet', file=fp)
         print('{', file=fp)
         for s in codes:
