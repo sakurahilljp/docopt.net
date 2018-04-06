@@ -1,3 +1,15 @@
+/*
+
+Docopt.NET (https://github.com/docopt/docopt.net)
+
+Copyright (c) 2012 Vladimir Keleshev, <vladimir@keleshev.com>
+                   Dinh Doan Van Bien, <dinh@doanvanbien.com>
+
+Licensed under MIT (https://github.com/docopt/docopt.net/blob/master/LICENSE-MIT)
+
+*/
+
+
 using System.Collections.Generic;
 using System.Collections;
 using System.Diagnostics;
